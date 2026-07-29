@@ -4,36 +4,36 @@ import Link from "next/link";
 import { modules } from "../../complete-guide/page";
 
 export function ModuleDetail({ slug }: { slug: string }) {
-  const module = modules.find((item) => item.id === slug);
+  const currentModule = modules.find((item) => item.id === slug);
 
-  if (!module) return null;
+  if (!currentModule) return null;
 
   return (
     <article className="module-page page-enter">
       <nav className="breadcrumb" aria-label="Breadcrumb">
-        <Link href="/">Help centre</Link><span>/</span><Link href="/modules">Modules</Link><span>/</span><b>{module.title}</b>
+        <Link href="/docs">Documentation</Link><span>/</span><Link href="/modules">Modules</Link><span>/</span><b>{currentModule.title}</b>
       </nav>
       <header className="module-page-hero">
-        <div className="module-number">{module.number}</div>
+        <div className="module-number">{currentModule.number}</div>
         <div>
-          <p className="eyebrow">{module.audience}</p>
-          <h1>{module.title}</h1>
-          <p>{module.purpose}</p>
+          <p className="eyebrow">{currentModule.audience}</p>
+          <h1>{currentModule.title}</h1>
+          <p>{currentModule.purpose}</p>
         </div>
       </header>
       <div className="module-page-layout">
         <aside>
           <p>On this page</p>
-          {module.topics.map((topic, index) => (
+          {currentModule.topics.map((topic, index) => (
             <a href={`#topic-${index + 1}`} key={topic.title}>
               <span>{String(index + 1).padStart(2, "0")}</span>{topic.title}
             </a>
           ))}
         </aside>
         <div className="module-topic-stack">
-          {module.topics.map((topic, index) => (
+          {currentModule.topics.map((topic, index) => (
             <section id={`topic-${index + 1}`} key={topic.title}>
-              <div className="topic-kicker">Guide {module.number}.{index + 1}</div>
+              <div className="topic-kicker">Guide {currentModule.number}.{index + 1}</div>
               <h2>{topic.title}</h2>
               <p className="topic-summary">{topic.summary}</p>
               <p className="steps-label">How to use it</p>

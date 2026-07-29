@@ -11,11 +11,11 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const module = moduleMeta.find((item) => item.id === slug);
-  if (!module) return {};
+  const moduleInfo = moduleMeta.find((item) => item.id === slug);
+  if (!moduleInfo) return {};
   return {
-    title: `${module.title} | AurumDesk Help Centre`,
-    description: module.purpose,
+    title: `${moduleInfo.title} | KaratSetu Documentation`,
+    description: moduleInfo.purpose,
   };
 }
 

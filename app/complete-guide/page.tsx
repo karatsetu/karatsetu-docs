@@ -1,6 +1,8 @@
 "use client";
 
 import { useDeferredValue, useMemo, useState } from "react";
+import { SiteFooter } from "../site-footer";
+import { SiteHeader } from "../site-header";
 
 export type Topic = {
   title: string;
@@ -751,20 +753,7 @@ export default function Home() {
 
   return (
     <main>
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="AurumDesk help centre home">
-          <span className="brand-mark">A</span>
-          <span>
-            <b>AurumDesk</b>
-            <small>Help Centre</small>
-          </span>
-        </a>
-        <nav aria-label="Utility navigation">
-          <a href="#quick-start">Quick start</a>
-          <a href="#modules">Modules</a>
-          <a href="#troubleshooting">Get unstuck</a>
-        </nav>
-      </header>
+      <SiteHeader />
 
       <section className="hero" id="top">
         <div className="hero-copy">
@@ -924,14 +913,7 @@ export default function Home() {
         </section>
       )}
 
-      <footer>
-        <div>
-          <span className="brand-mark">A</span>
-          <p><b>AurumDesk</b><br />Jewellery ERP help centre</p>
-        </div>
-        <p>Built around the full flow: Design → Order → Procurement → Production → Hallmarking → Sales → Accounts</p>
-        <a href="#top">Back to top ↑</a>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

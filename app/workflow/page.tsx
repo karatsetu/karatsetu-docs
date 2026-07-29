@@ -3,7 +3,7 @@ import { SiteHeader } from "../site-header";
 import { WorkflowExplorer } from "../workflow-explorer";
 
 export const metadata = {
-  title: "End-to-End Workflow | AurumDesk Help Centre",
+  title: "End-to-End Workflow | KaratSetu Documentation",
   description: "Follow a jewellery piece through design, order, procurement, production, hallmarking, sales and accounts.",
 };
 

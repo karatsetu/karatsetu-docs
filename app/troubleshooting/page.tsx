@@ -3,7 +3,7 @@ import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
 
 export const metadata = {
-  title: "Troubleshooting | AurumDesk Help Centre",
+  title: "Troubleshooting | KaratSetu Documentation",
   description: "Diagnose common permissions, approval, production, inventory, billing and reconciliation blockers.",
 };
 

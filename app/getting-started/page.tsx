@@ -3,8 +3,8 @@ import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
 
 export const metadata = {
-  title: "Getting Started | AurumDesk Help Centre",
-  description: "Set up AurumDesk in the right order before processing jewellery transactions.",
+  title: "Getting Started | KaratSetu Documentation",
+  description: "Set up KaratSetu in the right order before processing jewellery transactions.",
 };
 
 const checkpoints = [

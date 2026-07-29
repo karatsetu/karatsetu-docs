@@ -1,64 +1,71 @@
 import Link from "next/link";
-import { ModuleFinder } from "./module-finder";
-import { moduleMeta } from "./module-meta";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
-import { WorkflowExplorer } from "./workflow-explorer";
 
-export default function Home() {
+const pillars = [
+  ["Every gram accountable", "Purity-wise metal ledgers, job issues, returns, wastage and stock reconciliation stay connected."],
+  ["Every job visible", "Orders, karigars, production stages, QC, hallmarking and finished stock share one traceable timeline."],
+  ["Every rupee reconciled", "Live-rate billing, GST, advances, old-gold exchange and finance post into the same operating system."],
+];
+
+export default function ProductHome() {
   return (
     <main>
       <SiteHeader />
-      <section className="landing-hero page-enter">
+      <section className="product-hero">
         <div>
-          <p className="eyebrow">61 task guides · 13 connected modules</p>
-          <h1>Know what to do next, from sketch to sale.</h1>
-          <p className="hero-lede">A practical help centre for every person moving designs, metal, orders and money through AurumDesk.</p>
+          <p className="eyebrow">Jewellery manufacturing ERP for India</p>
+          <h1>Every gram. Every job. Every rupee.</h1>
+          <p className="hero-lede">KaratSetu connects design, metal, karigars, hallmarking, billing and accounts in one jewellery operating system.</p>
           <div className="hero-actions">
-            <Link className="primary-link" href="/getting-started">Start here <span>→</span></Link>
-            <Link className="secondary-link" href="/modules">Browse modules</Link>
+            <Link className="primary-link" href="/docs">Open documentation <span>→</span></Link>
+            <Link className="secondary-link" href="/workflow">Explore product flow</Link>
+          </div>
+          <p className="product-proof">Built around Indian jewellery workflows · BIS hallmarking · GST · HUID · karigar accounting</p>
+        </div>
+        <div className="system-preview" aria-label="KaratSetu connected workflow preview">
+          <div className="system-preview-head">
+            <span className="brand-mark">K</span>
+            <p><b>Today’s control room</b><small>Design to accounts, live</small></p>
+            <i>All systems connected</i>
+          </div>
+          <div className="system-metric">
+            <span>Metal in production</span>
+            <strong>12,486.340 g</strong>
+            <small>22K · 18K · 14K reconciled</small>
+          </div>
+          <div className="system-rail">
+            {["Design", "Order", "Production", "Hallmark", "Sale", "Accounts"].map((step, index) => (
+              <div key={step}><span>{String(index + 1).padStart(2, "0")}</span><b>{step}</b></div>
+            ))}
+          </div>
+          <div className="system-status">
+            <p><span>18</span> jobs moving today</p>
+            <p><span>3</span> need attention</p>
           </div>
         </div>
-        <div className="hero-route-card" aria-label="Documentation routes">
-          <p>Choose your route</p>
-          <Link href="/getting-started"><span>01</span><b>New to AurumDesk</b><i>Set up in the right order →</i></Link>
-          <Link href="/workflow"><span>02</span><b>Follow a jewellery piece</b><i>Understand the full flow →</i></Link>
-          <Link href="/troubleshooting"><span>03</span><b>Something is blocked</b><i>Diagnose common problems →</i></Link>
-        </div>
       </section>
-
-      <section className="confidence-strip" aria-label="Help centre coverage">
-        <div><strong>13</strong><span>modules</span></div>
-        <div><strong>61</strong><span>task guides</span></div>
-        <div><strong>7</strong><span>workflow stages</span></div>
-        <p>Written for counter staff, production teams, storekeepers, accountants, managers and owners.</p>
+      <section className="product-pillars">
+        {pillars.map(([title, text], index) => (
+          <article key={title}>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <h2>{title}</h2>
+            <p>{text}</p>
+          </article>
+        ))}
       </section>
-
-      <section className="section page-section">
-        <div className="section-heading">
-          <p className="eyebrow">The connected workflow</p>
-          <h2>See what each stage receives and hands forward</h2>
-          <p>Select a stage to understand its purpose, output and detailed guide.</p>
-        </div>
-        <WorkflowExplorer />
-      </section>
-
-      <section className="section finder-section">
-        <div className="section-heading">
-          <p className="eyebrow">Browse by responsibility</p>
-          <h2>Go directly to the module you use</h2>
-          <p>Search by task, team or business area. Each module now has its own dedicated page.</p>
-        </div>
-        <ModuleFinder modules={moduleMeta} compact />
-      </section>
-
-      <section className="section support-callout">
+      <section className="docs-entry">
         <div>
-          <p className="eyebrow">When something does not work</p>
-          <h2>Start with permissions, status and configuration.</h2>
+          <p className="eyebrow">KaratSetu documentation</p>
+          <h2>Already using the product?</h2>
+          <p>Go straight to setup, a business module, the end-to-end workflow or troubleshooting.</p>
         </div>
-        <p>Most blockers come from a missing approval, an unfinished previous stage, role access or a company rule. The troubleshooting guide helps you isolate the cause without guessing.</p>
-        <Link className="light-link" href="/troubleshooting">Open troubleshooting <span>↗</span></Link>
+        <div className="docs-entry-links">
+          <Link href="/docs"><b>Documentation home</b><span>Search and browse all guides ↗</span></Link>
+          <Link href="/getting-started"><b>Getting started</b><span>Configure the system correctly ↗</span></Link>
+          <Link href="/modules"><b>All modules</b><span>Open your area of work ↗</span></Link>
+          <Link href="/troubleshooting"><b>Get unstuck</b><span>Diagnose common blockers ↗</span></Link>
+        </div>
       </section>
       <SiteFooter />
     </main>

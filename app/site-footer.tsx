@@ -4,11 +4,11 @@ export function SiteFooter() {
   return (
     <footer>
       <div>
-        <span className="brand-mark">A</span>
-        <p><b>AurumDesk</b><br />Jewellery ERP help centre</p>
+        <span className="brand-mark">K</span>
+        <p><b>KaratSetu</b><br />Jewellery ERP for India</p>
       </div>
       <p>Design → Order → Procurement → Production → Hallmarking → Sales → Accounts</p>
-      <Link href="/">Help centre home ↑</Link>
+      <Link href="/docs">Documentation home ↑</Link>
     </footer>
   );
 }

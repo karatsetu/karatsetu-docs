@@ -4,8 +4,8 @@ import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
 
 export const metadata = {
-  title: "All Modules | AurumDesk Help Centre",
-  description: "Browse all 13 AurumDesk jewellery ERP modules and their end-user guides.",
+  title: "All Modules | KaratSetu Documentation",
+  description: "Browse all 13 KaratSetu jewellery ERP modules and their end-user guides.",
 };
 
 export default function ModulesPage() {
