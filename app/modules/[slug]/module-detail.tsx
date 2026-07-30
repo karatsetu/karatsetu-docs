@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { modules } from "../../complete-guide/page";
+import { useLanguage } from "../../language-provider";
 
 export function ModuleDetail({ slug }: { slug: string }) {
+  const { lang, t } = useLanguage();
   const currentModule = modules.find((item) => item.id === slug);
 
   if (!currentModule) return null;
@@ -11,7 +13,7 @@ export function ModuleDetail({ slug }: { slug: string }) {
   return (
     <article className="module-page page-enter">
       <nav className="breadcrumb" aria-label="Breadcrumb">
-        <Link href="/docs">Documentation</Link><span>/</span><Link href="/modules">Modules</Link><span>/</span><b>{currentModule.title}</b>
+        <Link href="/docs">{t.moduleDetail.breadcrumbDocs}</Link><span>/</span><Link href="/modules">{t.moduleDetail.breadcrumbModules}</Link><span>/</span><b>{currentModule.title}</b>
       </nav>
       <header className="module-page-hero">
         <div className="module-number">{currentModule.number}</div>
@@ -21,9 +23,10 @@ export function ModuleDetail({ slug }: { slug: string }) {
           <p>{currentModule.purpose}</p>
         </div>
       </header>
+      {lang === "hi" && <p className="lang-note">{t.moduleDetail.englishOnlyNote}</p>}
       <div className="module-page-layout">
         <aside>
-          <p>On this page</p>
+          <p>{t.moduleDetail.onThisPage}</p>
           {currentModule.topics.map((topic, index) => (
             <a href={`#topic-${index + 1}`} key={topic.title}>
               <span>{String(index + 1).padStart(2, "0")}</span>{topic.title}
@@ -32,20 +35,20 @@ export function ModuleDetail({ slug }: { slug: string }) {
         </aside>
         <div className="module-topic-stack">
           {currentModule.topics.map((topic, index) => (
-            <section id={`topic-${index + 1}`} key={topic.title}>
-              <div className="topic-kicker">Guide {currentModule.number}.{index + 1}</div>
+            <section id={`topic-${index + 1}`} key={topic.title} className="reveal">
+              <div className="topic-kicker">{t.moduleDetail.guideLabel} {currentModule.number}.{index + 1}</div>
               <h2>{topic.title}</h2>
               <p className="topic-summary">{topic.summary}</p>
-              <p className="steps-label">How to use it</p>
+              <p className="steps-label">{t.moduleDetail.howToUse}</p>
               <ol>
                 {topic.steps.map((step) => <li key={step}>{step}</li>)}
               </ol>
-              {topic.tip && <p className="tip"><b>Good to know</b>{topic.tip}</p>}
+              {topic.tip && <p className="tip"><b>{t.moduleDetail.goodToKnow}</b>{topic.tip}</p>}
             </section>
           ))}
           <div className="next-module">
-            <p>Need the bigger picture?</p>
-            <Link href="/workflow">See where this module fits in the full workflow →</Link>
+            <p>{t.moduleDetail.nextModule}</p>
+            <Link href="/workflow">{t.moduleDetail.nextModuleCta}</Link>
           </div>
         </div>
       </div>

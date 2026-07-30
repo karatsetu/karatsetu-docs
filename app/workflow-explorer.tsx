@@ -2,29 +2,23 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useLanguage } from "./language-provider";
 
-const steps = [
-  { title: "Design", text: "Create the catalogue design, approve its BOM and confirm the costing.", href: "/modules/design-costing", output: "Approved design + BOM" },
-  { title: "Order", text: "Book specifications, delivery promise, rate lock and customer advance.", href: "/modules/orders", output: "Production commitment" },
-  { title: "Procure", text: "Raise purchase orders, receive materials and reconcile supplier invoices.", href: "/modules/procurement", output: "Accepted raw material" },
-  { title: "Produce", text: "Issue metal and stones, track stages, calculate wastage and complete QC.", href: "/modules/production", output: "QC-passed piece" },
-  { title: "Hallmark", text: "Create the AHC batch, receive the item and map its HUID.", href: "/modules/hallmarking", output: "Compliant hallmarked piece" },
-  { title: "Sell", text: "Tag finished stock, apply live rates and GST, then collect payment.", href: "/modules/sales", output: "Traceable invoice" },
-  { title: "Account", text: "Reconcile the currency ledger and purity-wise metal ledger together.", href: "/modules/accounts", output: "Balanced money + metal" },
-];
+const hrefs = ["/modules/design-costing", "/modules/orders", "/modules/procurement", "/modules/production", "/modules/hallmarking", "/modules/sales", "/modules/accounts"];
 
 export function WorkflowExplorer() {
+  const { t } = useLanguage();
   const [active, setActive] = useState(0);
-  const step = steps[active];
+  const step = t.workflowExplorer.steps[active];
 
   return (
     <div className="workflow-explorer">
       <div className="workflow-tabs" role="tablist" aria-label="Jewellery workflow stages">
-        {steps.map((item, index) => (
+        {t.workflowExplorer.steps.map((item, index) => (
           <button
             aria-selected={active === index}
             className={active === index ? "active" : ""}
-            key={item.title}
+            key={index}
             onClick={() => setActive(index)}
             role="tab"
             type="button"
@@ -34,15 +28,15 @@ export function WorkflowExplorer() {
           </button>
         ))}
       </div>
-      <div className="workflow-panel" role="tabpanel" key={step.title}>
+      <div className="workflow-panel" role="tabpanel" key={active}>
         <div>
-          <p className="eyebrow">Stage {String(active + 1).padStart(2, "0")}</p>
+          <p className="eyebrow">{t.workflowExplorer.stage} {String(active + 1).padStart(2, "0")}</p>
           <h2>{step.title}</h2>
           <p>{step.text}</p>
-          <Link className="primary-link" href={step.href}>Read the {step.title.toLocaleLowerCase()} guide <span>↗</span></Link>
+          <Link className="primary-link" href={hrefs[active]}>{step.readLabel} <span>↗</span></Link>
         </div>
         <div className="workflow-output">
-          <span>Output</span>
+          <span>{t.workflowExplorer.output}</span>
           <strong>{step.output}</strong>
         </div>
       </div>

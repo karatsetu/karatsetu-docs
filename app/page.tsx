@@ -1,70 +1,80 @@
+"use client";
+
 import Link from "next/link";
+import type { MouseEvent } from "react";
+import { AnimatedNumber } from "./animated-number";
+import { useLanguage } from "./language-provider";
+import { PurityCalculator } from "./purity-calculator";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 
-const pillars = [
-  ["Every gram accountable", "Purity-wise metal ledgers, job issues, returns, wastage and stock reconciliation stay connected."],
-  ["Every job visible", "Orders, karigars, production stages, QC, hallmarking and finished stock share one traceable timeline."],
-  ["Every rupee reconciled", "Live-rate billing, GST, advances, old-gold exchange and finance post into the same operating system."],
-];
+function onHeroMove(event: MouseEvent<HTMLElement>) {
+  const rect = event.currentTarget.getBoundingClientRect();
+  event.currentTarget.style.setProperty("--mx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+  event.currentTarget.style.setProperty("--my", `${((event.clientY - rect.top) / rect.height) * 100}%`);
+}
 
 export default function ProductHome() {
+  const { t } = useLanguage();
+
   return (
     <main>
       <SiteHeader />
-      <section className="product-hero">
+      <section className="product-hero" onMouseMove={onHeroMove}>
         <div>
-          <p className="eyebrow">Jewellery manufacturing ERP for India</p>
-          <h1>Every gram. Every job. Every rupee.</h1>
-          <p className="hero-lede">KaratSetu connects design, metal, karigars, hallmarking, billing and accounts in one jewellery operating system.</p>
-          <div className="hero-actions">
-            <Link className="primary-link" href="/docs">Open documentation <span>→</span></Link>
-            <Link className="secondary-link" href="/workflow">Explore product flow</Link>
+          <p className="eyebrow reveal">{t.home.eyebrow}</p>
+          <h1 className="reveal" data-reveal-delay="60">{t.home.h1}</h1>
+          <p className="hero-lede reveal" data-reveal-delay="120">{t.home.lede}</p>
+          <div className="hero-actions reveal" data-reveal-delay="180">
+            <Link className="primary-link" href="/docs">{t.home.ctaDocs} <span>→</span></Link>
+            <Link className="secondary-link" href="/workflow">{t.home.ctaFlow}</Link>
           </div>
-          <p className="product-proof">Built around Indian jewellery workflows · BIS hallmarking · GST · HUID · karigar accounting</p>
+          <p className="product-proof reveal" data-reveal-delay="240">{t.home.proof}</p>
         </div>
-        <div className="system-preview" aria-label="KaratSetu connected workflow preview">
+        <div className="system-preview reveal" data-reveal-delay="180" aria-label="KaratSetu connected workflow preview">
           <div className="system-preview-head">
             <span className="brand-mark">K</span>
-            <p><b>Today’s control room</b><small>Design to accounts, live</small></p>
-            <i>All systems connected</i>
+            <p><b>{t.home.preview.title}</b><small>{t.home.preview.sub}</small></p>
+            <i>{t.home.preview.tag}</i>
           </div>
           <div className="system-metric">
-            <span>Metal in production</span>
-            <strong>12,486.340 g</strong>
-            <small>22K · 18K · 14K reconciled</small>
+            <span>{t.home.preview.metricLabel}</span>
+            <strong><AnimatedNumber value={12486.34} decimals={3} suffix=" g" /></strong>
+            <small>{t.home.preview.metricSub}</small>
           </div>
           <div className="system-rail">
-            {["Design", "Order", "Production", "Hallmark", "Sale", "Accounts"].map((step, index) => (
-              <div key={step}><span>{String(index + 1).padStart(2, "0")}</span><b>{step}</b></div>
+            {t.home.preview.rail.map((step, index) => (
+              <div key={index}><span>{String(index + 1).padStart(2, "0")}</span><b>{step}</b></div>
             ))}
           </div>
           <div className="system-status">
-            <p><span>18</span> jobs moving today</p>
-            <p><span>3</span> need attention</p>
+            <p><span><AnimatedNumber value={18} /></span> {t.home.preview.moving}</p>
+            <p><span><AnimatedNumber value={3} /></span> {t.home.preview.attention}</p>
           </div>
         </div>
       </section>
       <section className="product-pillars">
-        {pillars.map(([title, text], index) => (
-          <article key={title}>
+        {t.home.pillars.map((pillar, index) => (
+          <article key={index} className="reveal" data-reveal-delay={index * 90}>
             <span>{String(index + 1).padStart(2, "0")}</span>
-            <h2>{title}</h2>
-            <p>{text}</p>
+            <h2>{pillar.title}</h2>
+            <p>{pillar.text}</p>
           </article>
         ))}
       </section>
+      <section className="section calculator-section">
+        <PurityCalculator />
+      </section>
       <section className="docs-entry">
         <div>
-          <p className="eyebrow">KaratSetu documentation</p>
-          <h2>Already using the product?</h2>
-          <p>Go straight to setup, a business module, the end-to-end workflow or troubleshooting.</p>
+          <p className="eyebrow reveal">{t.home.docsEntry.eyebrow}</p>
+          <h2 className="reveal">{t.home.docsEntry.h2}</h2>
+          <p className="reveal">{t.home.docsEntry.p}</p>
         </div>
-        <div className="docs-entry-links">
-          <Link href="/docs"><b>Documentation home</b><span>Search and browse all guides ↗</span></Link>
-          <Link href="/getting-started"><b>Getting started</b><span>Configure the system correctly ↗</span></Link>
-          <Link href="/modules"><b>All modules</b><span>Open your area of work ↗</span></Link>
-          <Link href="/troubleshooting"><b>Get unstuck</b><span>Diagnose common blockers ↗</span></Link>
+        <div className="docs-entry-links reveal">
+          {t.home.docsEntry.links.map((link) => (
+            <Link href={link.href} key={link.href}><b>{link.title}</b><span>{link.sub}</span></Link>
+          ))}
         </div>
       </section>
       <SiteFooter />

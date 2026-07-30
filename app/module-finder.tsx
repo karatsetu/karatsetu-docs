@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { useDeferredValue, useMemo, useState } from "react";
-import type { ModuleMeta } from "./module-meta";
+import { useLanguage } from "./language-provider";
+import { getModuleMeta, type ModuleMeta } from "./module-meta";
 
-export function ModuleFinder({ modules, compact = false }: { modules: readonly ModuleMeta[]; compact?: boolean }) {
+export function ModuleFinder({ compact = false }: { compact?: boolean }) {
+  const { lang, t } = useLanguage();
+  const modules = useMemo<ModuleMeta[]>(() => getModuleMeta(lang), [lang]);
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase());
   const filtered = useMemo(() => {
@@ -19,33 +22,33 @@ export function ModuleFinder({ modules, compact = false }: { modules: readonly M
     <div className="module-finder">
       <label className="search-box">
         <span aria-hidden="true">⌕</span>
-        <span className="sr-only">Search modules</span>
+        <span className="sr-only">{t.finder.placeholder}</span>
         <input
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Find billing, HUID, job cards, reports…"
+          placeholder={t.finder.placeholder}
           type="search"
         />
-        {query && <button type="button" onClick={() => setQuery("")}>Clear</button>}
+        {query && <button type="button" onClick={() => setQuery("")}>{t.finder.clear}</button>}
       </label>
       <div className="module-card-grid">
-        {filtered.map((module) => (
-          <Link className="module-card" href={`/modules/${module.id}`} key={module.id}>
+        {filtered.map((module, index) => (
+          <Link className="module-card reveal" data-reveal-delay={(index % 6) * 60} href={`/modules/${module.id}`} key={module.id}>
             <span>{module.number}</span>
             <p>{module.audience}</p>
             <h3>{module.title}</h3>
             <p>{module.purpose}</p>
-            <b>Open module <i aria-hidden="true">↗</i></b>
+            <b>{t.finder.openModule} <i aria-hidden="true">↗</i></b>
           </Link>
         ))}
       </div>
       {!filtered.length && (
         <div className="finder-empty">
-          <p>No matching module. Try “production”, “stock” or “accounts”.</p>
-          <button type="button" onClick={() => setQuery("")}>Show every module</button>
+          <p>{t.finder.noMatch}</p>
+          <button type="button" onClick={() => setQuery("")}>{t.finder.showAll}</button>
         </div>
       )}
-      {compact && !deferredQuery && <Link className="text-link" href="/modules">Browse all 13 modules →</Link>}
+      {compact && !deferredQuery && <Link className="text-link" href="/modules">{t.finder.browseAll}</Link>}
     </div>
   );
 }

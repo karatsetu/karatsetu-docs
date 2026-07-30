@@ -3,20 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const primaryLinks = [
-  { href: "/", label: "Home" },
-  { href: "/docs", label: "Documentation" },
-  { href: "/workflow", label: "Product flow" },
-  { href: "/troubleshooting", label: "Help" },
-];
-
-const docsLinks = [
-  { href: "/docs", label: "Overview" },
-  { href: "/getting-started", label: "Getting started" },
-  { href: "/modules", label: "All modules" },
-  { href: "/complete-guide", label: "Complete guide" },
-];
+import { useLanguage } from "./language-provider";
+import { LanguageToggle, ThemeToggle } from "./site-controls";
 
 function matches(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -32,7 +20,22 @@ function primaryMatches(pathname: string, href: string) {
 export function SiteHeader() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useLanguage();
   const docsContext = pathname !== "/";
+
+  const primaryLinks = [
+    { href: "/", label: t.nav.home },
+    { href: "/docs", label: t.nav.docs },
+    { href: "/workflow", label: t.nav.flow },
+    { href: "/troubleshooting", label: t.nav.help },
+  ];
+
+  const docsLinks = [
+    { href: "/docs", label: t.docsNav.overview },
+    { href: "/getting-started", label: t.docsNav.start },
+    { href: "/modules", label: t.docsNav.modules },
+    { href: "/complete-guide", label: t.docsNav.guide },
+  ];
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -61,7 +64,11 @@ export function SiteHeader() {
             );
           })}
         </nav>
-        <Link className="header-guide-link" href="/docs">{docsContext ? "Docs home" : "Open docs"} <span>↗</span></Link>
+        <div className="top-nav-controls">
+          <LanguageToggle />
+          <ThemeToggle />
+          <Link className="header-guide-link" href="/docs">{docsContext ? t.nav.docsHome : t.nav.openDocs} <span>↗</span></Link>
+        </div>
         <button
           aria-expanded={menuOpen}
           aria-label={menuOpen ? "Close navigation" : "Open navigation"}
@@ -75,7 +82,7 @@ export function SiteHeader() {
       </div>
       {docsContext && (
         <div className="docs-subnav">
-          <Link href="/docs">Documentation</Link>
+          <Link href="/docs">{t.docsNav.label}</Link>
           <nav aria-label="Documentation navigation">
             {docsLinks.map((link) => {
               const active = matches(pathname, link.href);
@@ -86,7 +93,7 @@ export function SiteHeader() {
               );
             })}
           </nav>
-          <span className="docs-mobile-hint">Use the menu to browse sections</span>
+          <span className="docs-mobile-hint">{t.docsNav.mobileHint}</span>
         </div>
       )}
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`} aria-hidden={!menuOpen}>
@@ -99,7 +106,7 @@ export function SiteHeader() {
               </Link>
             );
           })}
-          <p>Documentation</p>
+          <p>{t.docsNav.label}</p>
           {docsLinks.slice(1).map((link) => {
             const active = matches(pathname, link.href);
             return (
@@ -108,6 +115,10 @@ export function SiteHeader() {
               </Link>
             );
           })}
+          <div className="mobile-menu-controls">
+            <LanguageToggle />
+            <ThemeToggle />
+          </div>
         </nav>
       </div>
     </header>

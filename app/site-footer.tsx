@@ -1,14 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "./language-provider";
 
 export function SiteFooter() {
+  const { t } = useLanguage();
   return (
     <footer>
       <div>
         <span className="brand-mark">K</span>
-        <p><b>KaratSetu</b><br />Jewellery ERP for India</p>
+        <p><b>KaratSetu</b><br />{t.footer.tagline}</p>
       </div>
-      <p>Design → Order → Procurement → Production → Hallmarking → Sales → Accounts</p>
-      <Link href="/docs">Documentation home ↑</Link>
+      <p>{t.footer.flow}</p>
+      <Link href="/docs">{t.footer.back}</Link>
     </footer>
   );
 }
